@@ -1,0 +1,941 @@
+{
+	"info": {
+		"_postman_id": "77673f84-7a6c-482f-8d7a-8f8e87463282",
+		"name": "Electro Backend API",
+		"description": "API collection for Electro Backend authentication, user management, and car listings.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "John Doe",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "john@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "password123",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "private_seller",
+									"description": "Options: buyer, private_seller, dealer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "john@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "text"
+								},
+								{
+									"key": "device_name",
+									"value": "iphone_13",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Profile",
+			"item": [
+				{
+					"name": "Get User Information",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "John Updated",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "john_updated@example.com",
+									"type": "text"
+								},
+								{
+									"key": "profile_image",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "password",
+									"value": "newpassword123",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password_confirmation",
+									"value": "newpassword123",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Used Car Listings",
+			"item": [
+				{
+					"name": "List Used Cars (Public)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/used-car-listings?make_or_model=make_1&price_from=10000&price_to=100000&year_from=2015&year_to=2024&emirate_id=1&seller_types=Private Seller&ads_posted=today",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"used-car-listings"
+							],
+							"query": [
+								{
+									"key": "make_or_model",
+									"value": "make_1",
+									"description": "Filter by Make/Model ID (e.g. make_1 or model_5)."
+								},
+								{
+									"key": "emirate_id",
+									"value": "1"
+								},
+								{
+									"key": "price_from",
+									"value": "10000"
+								},
+								{
+									"key": "price_to",
+									"value": "100000"
+								},
+								{
+									"key": "year_from",
+									"value": "2015"
+								},
+								{
+									"key": "year_to",
+									"value": "2024"
+								},
+								{
+									"key": "km_min",
+									"value": "0"
+								},
+								{
+									"key": "km_max",
+									"value": "50000"
+								},
+								{
+									"key": "seller_types",
+									"value": "Private Seller",
+									"description": "Private Seller or Dealer"
+								},
+								{
+									"key": "ads_posted",
+									"value": "today",
+									"description": "today, 3_days, 1_week, 2_weeks, 1_month, 3_months, 6_months"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Used Car Filter Metadata",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/used-car-listings/filter-data",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"used-car-listings",
+								"filter-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Used Car Form Creation Data (Auth)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/used-car-listings/create-data",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"used-car-listings",
+								"create-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Used Car Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/used-car-listings/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"used-car-listings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Used Car Listing (Auth)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Tesla Model S Plaid",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "350000",
+									"type": "text"
+								},
+								{
+									"key": "emirate_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "car_make_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "car_model_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "car_trim_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "regional_spec_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "year",
+									"value": "2023",
+									"type": "text"
+								},
+								{
+									"key": "kilometers",
+									"value": "5000",
+									"type": "text"
+								},
+								{
+									"key": "body_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "is_insured",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "+971501234567",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Immaculate condition.",
+									"type": "text"
+								},
+								{
+									"key": "exterior_color_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "interior_color_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "warranty_option_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "charging_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "door_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "engine_cylinder_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "transmission_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "horsepower_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "steering_side_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "safety_features[]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "tech_features[]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "comfort_features[]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "exterior_features[]",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/used-car-listings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"used-car-listings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "New Car Listings",
+			"item": [
+				{
+					"name": "List New Cars (Public)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/new-car-listings?make_or_model=make_1&price_from=100000&price_to=500000&year_from=2024&year_to=2025&emirate_id=1&seller_types=Dealer&ads_posted=1_week",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"new-car-listings"
+							],
+							"query": [
+								{
+									"key": "make_or_model",
+									"value": "make_1"
+								},
+								{
+									"key": "emirate_id",
+									"value": "1"
+								},
+								{
+									"key": "price_from",
+									"value": "100000"
+								},
+								{
+									"key": "price_to",
+									"value": "500000"
+								},
+								{
+									"key": "year_from",
+									"value": "2024"
+								},
+								{
+									"key": "year_to",
+									"value": "2025"
+								},
+								{
+									"key": "seller_types",
+									"value": "Dealer"
+								},
+								{
+									"key": "ads_posted",
+									"value": "1_week"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Car Filter Metadata",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/new-car-listings/filter-data",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"new-car-listings",
+								"filter-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Car Form Creation Data (Auth)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/new-car-listings/create-data",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"new-car-listings",
+								"create-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get New Car Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/new-car-listings/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"new-car-listings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post New Car Listing (Auth)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Brand New Land Rover Defender 110",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "450000",
+									"type": "text"
+								},
+								{
+									"key": "emirate_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "car_make_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "car_model_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "car_trim_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "regional_spec_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "year",
+									"value": "2024",
+									"type": "text"
+								},
+								{
+									"key": "kilometers",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "body_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "is_insured",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "+971500000000",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Luxury off-roader.",
+									"type": "text"
+								},
+								{
+									"key": "exterior_color_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "interior_color_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "warranty_option_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "charging_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "door_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "engine_cylinder_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "transmission_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "horsepower_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "steering_side_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "safety_features[]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "tech_features[]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "comfort_features[]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "exterior_features[]",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/new-car-listings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"new-car-listings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "{YOUR_TOKEN_HERE}",
+			"type": "string"
+		}
+	]
+}

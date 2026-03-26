@@ -1,0 +1,56 @@
+<script setup>
+import { useForm } from '@inertiajs/vue3'
+import Modal from '@/Components/Modal.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import TextInput from '@/Components/TextInput.vue'
+import InputError from '@/Components/InputError.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
+import SecondaryButton from '@/Components/SecondaryButton.vue'
+
+const props = defineProps({
+    show: Boolean
+})
+
+const emit = defineEmits(['close'])
+
+const form = useForm({
+    name: '',
+    image: null,
+})
+
+const submit = () => {
+    form.post(route('admin.car-listings.make.store'), {
+        onSuccess: () => {
+            form.reset()
+            emit('close')
+        }
+    })
+}
+</script>
+
+<template>
+    <Modal :show="show" @close="emit('close')" maxWidth="xl">
+        <div class="p-8">
+            <h2 class="text-xl font-bold text-gray-900 border-b pb-4 mb-8 uppercase tracking-widest text-center">Add New Car Make</h2>
+            
+            <form @submit.prevent="submit" class="space-y-6">
+                <div>
+                    <InputLabel for="name" value="Make Name" class="text-[10px] uppercase font-black tracking-widest text-gray-400 mb-2" />
+                    <TextInput id="name" type="text" v-model="form.name" class="w-full" required placeholder="e.g. TOYOTA" />
+                    <InputError :message="form.errors.name" class="mt-2" />
+                </div>
+
+                <div>
+                    <InputLabel for="image" value="Brand Logo" class="text-[10px] uppercase font-black tracking-widest text-gray-400 mb-2" />
+                    <input type="file" @input="form.image = $event.target.files[0]" id="image" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
+                    <InputError :message="form.errors.image" class="mt-2" />
+                </div>
+
+                <div class="flex items-center justify-end space-x-3 pt-6 border-t">
+                    <SecondaryButton @click="emit('close')" :disabled="form.processing">Cancel</SecondaryButton>
+                    <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Create Make</PrimaryButton>
+                </div>
+            </form>
+        </div>
+    </Modal>
+</template>
